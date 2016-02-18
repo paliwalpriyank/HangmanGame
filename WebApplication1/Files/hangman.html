@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="hangman.css">
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div class="game">
+<h1>Movie Hangman Game</h1>
+    <p id="category" style="text-align:center;"></p>
+<p id="score" ></p>
+    <br />
+    <br />
+<form id="hangman">
+      
+    <button id="restart" name="restart" type="button">Restart</button>    
+    <button id="exit" name="Exit" type="button" style="float:right;">Exit Game</button>   
+</form>
+    <br />
+    <div id="alphaGrid" class="alphaGrid" style="margin-left:100px;"></div>
+    <br />
+<ul id="letters"></ul>
+    <br />
+   
+<p id="man"></p>
+    
+<p id="output" class="output"></p>
+    
+</div>
+<div  class="canv">
+<canvas id="myCanvas" width="600" height="500" style="border:1px solid #000000;"></canvas>
+</div>
+<script>
+</script>
+<script src="../Scripts/jquery-2.1.4.js"></script>
+<script src="hangman.js"></script>
+</body>
+</html>

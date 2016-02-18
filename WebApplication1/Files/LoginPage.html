@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="../Scripts/jquery-2.1.4.js"></script>
+
+</head>
+<body >
+
+    <form id="loginform" style="text-align:center">
+        <h1>Login into Hangman</h1>
+        <br />
+        
+        <img src="image/hangman.png" />
+        <br />
+        
+        
+        <br/>
+        <label>Login: </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" name="username" id="username" />
+        <br />
+        <br />
+        <label>Password:</label>
+        <input type="password" name="password" id="password" />
+        <br />
+        <br />
+        <input type="button" name="Login" id="submit" value="Login" />
+        <br />
+        <a href="Register.html">New User</a>
+    </form>
+    <br/>
+        
+    <p>
+        <h2> Instructions:</h2><br/>
+        1. Login into application or Register for a new username and password.<br />
+        2. Select a Category on next screen. You can also see your previous score on this screen.<br />
+        3. On Next screen, Guess the word. You will be given a total of 5 chances to complete a word.<br />
+        4. To save your score for future reference do click on Exit button before moving to any other scree or closing the browser.<br />
+        5. Score is updated automatically after a successful movie guess. You can see current and total score in the breadcrumb.<br />  
+
+
+    </p>
+    <script type="text/javascript">
+    function submit() {
+        alert("login clicked");
+
+    }
+        
+    $(document).on('submit','#loginform', function () {
+       
+        $.ajax({
+            url: 'http://localhost:17476/ProductRESTService.svc/CheckUser/',
+            type: 'post',
+            dataType: 'json',
+            data: $('#loginform').serialize(),
+            success: function(data) {
+                alert('success');
+            },
+            error: function () {
+            alert('Kya');
+        }
+        });
+    });
+    $('input#submit').click(function(){
+        if ($('#username')[0].value.trim().length==0 || $('#password')[0].value.trim().length==0)
+            alert('Please enter username and password');
+        else{
+        $.ajax({
+            url: 'http://localhost:17476/ProductRESTService.svc/CheckUser/' + $('#username')[0].value + '/' + $('#password')[0].value,
+            type: 'GET',
+            dataType: 'json',
+            accepts: { json: 'application/json; charset=utf-8' },
+            success: function (data) {
+                if (data == 1)
+                {
+                    window.location.assign("\Category.html?username=" + $('#username')[0].value);
+                }
+                else
+                {
+                    alert('Invalid Username and Password');
+                }
+            },
+            error: function () {
+                alert('Some Error Occured');
+            }
+        
+        });
+        }
+});
+        
+    </script>
+</body>
+
+
+</html>

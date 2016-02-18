@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+    <script src="../Scripts/jquery-2.1.4.js"></script>
+</head>
+<body style="text-align:center;">
+    <h1>Movie Hangman Game</h1>
+    <br/>
+    
+    <br/>
+    <form id="categroy" action="hangman.html">
+        
+        <select id="catselect" name="catselect">
+            <option value="action">Action</option>
+            <option value="arthouse">Arthouse and Drama</option>
+            <option value="comedy">Comedy</option>
+            <option value="crime">Crime</option>
+            <option value="horror">Horror</option>
+            <option value="romance">Romance</option>
+            <option value="sci-fi">Sci-Fi and Fantasy</option>
+        </select>
+        
+        <input type="submit" name="Go" value="Go" />
+        <br/>
+        <br/>
+        <br/>
+        <h3>Please choose a value</h3>
+        <h3>Welcome: <input id="username" type="text" name="username" style="border:none" /></h3>
+        <h4>If you want to see your previous score  <input type="button" id="userscore" value="Click Here" /></a> </h4>
+        
+    </form>
+    <script type="text/javascript">
+        var query = window.location.search.substring(1);
+        var vars1=query.split("=");
+        $(document).ready(function () {
+            
+            $('#username')[0].value = vars1[1];
+        });
+        $('#userscore').click(function ()
+        {
+            window.location.assign("\ScoreDetails.html?username=" + vars1[1]);
+        })
+    </script>
+    </body>
+</html>

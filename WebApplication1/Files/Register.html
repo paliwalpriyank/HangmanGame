@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Register User</title>
+    <script src="../Scripts/jquery-2.1.4.js"></script>
+</head>
+<body style="text-align:center;">
+    <h1>Register</h1>
+    <br />
+    <br/>
+    <form id="loginform">
+        <label>Login: </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" name="username" id="username" />
+        <br />
+        <br />
+        <label>Password:</label>
+        <input type="password" name="password" id="password" />
+        <br />
+        <br />
+        <input type="button" name="Login" id="submit" value="Register" />
+    </form>
+    <script type="text/javascript">
+        $('input#submit').click(function () {
+            if ($('#username')[0].value.trim().length == 0 || $('#password')[0].value.trim().length == 0)
+                alert('Please enter username and password');
+            else {
+                $.ajax({
+                    url: 'http://localhost:17476/ProductRESTService.svc/CreateUser/' + $('#username')[0].value + '/' + $('#password')[0].value,
+                    type: 'GET',
+                    dataType: 'json',
+                    accepts: { json: 'application/json; charset=utf-8' },
+                    success: function (data) {
+                        alert('User created succesfully. Enjoy!!!');
+                    },
+                    error: function () {
+                        alert('Some Error Occured');
+                    }
+
+                });
+            }
+        });
+    </script>
+</body>
+</html>

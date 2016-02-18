@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="../Scripts/jquery-2.1.4.js"></script>
+</head>
+<body>
+    <div id="scoreDetails" style="align-content:center;"></div>
+    <script type="text/javascript">
+        var value;
+  $(document).ready(function(){
+      
+
+      $.ajax({
+          url: 'http://localhost:17476/ProductRESTService.svc/GetIndividualScores/' + window.location.search.substring(1).split("=")[1],
+          type: 'GET',
+          dataType: 'xml',
+          accepts: { xml: 'application/xml; charset=utf-8' },
+          success: function (data) {
+              value = data;
+              displayResult();
+          },
+
+          error: function () {
+              alert('Some Error Occured');
+          }
+      })
+      
+  });
+  function loadXMLDoc(filename) {
+      var xhttp;
+      if (window.ActiveXObject) {
+          xhttp = new ActiveXObject("Msxml2.XMLHTTP");
+      }
+      else {
+          xhttp = new XMLHttpRequest();
+      }
+      xhttp.open("GET", filename, false);
+      try { xhttp.responseType = "msxml-document" } catch (err) { } // Helping IE11
+      xhttp.send("");
+      return xhttp.responseXML;
+  }
+  function displayResult() {
+      // this code will transform the xml based on xslt. This uses javascript.
+      xhttp = new XMLHttpRequest();
+      xsl = '<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><xsl:template match="/"><html><body style="text-align:center"><h2>Past Score</h2><table border="1"><tr bgcolor="#9acd32"><th style="text-align:left">Date</th><th style="text-align:left">Score</th></tr><xsl:for-each select="ArrayOfIndividualScore/IndividualScore"><tr><td><xsl:value-of select="date" /></td><td><xsl:value-of select="score" /></td></tr></xsl:for-each></table></body></html></xsl:template></xsl:stylesheet>';
+      var v=jQuery.parseXML(xsl);
+      var v1=jQuery.parseXML(value);
+      // code for IE
+      if (window.ActiveXObject || xhttp.responseType == "msxml-document") {
+          ex = value.transformNode(v);
+          document.getElementById("scoreDetails").innerHTML = ex;
+      }
+          // code for Chrome, Firefox, Opera, etc.
+      else if (document.implementation && document.implementation.createDocument) {
+          xsltProcessor = new XSLTProcessor();
+          xsltProcessor.importStylesheet(v);
+          resultDocument = xsltProcessor.transformToFragment(value, document);
+          document.getElementById("scoreDetails").appendChild(resultDocument);
+      }
+  }
+        
+        </script>
+    </body>
+    </html>
